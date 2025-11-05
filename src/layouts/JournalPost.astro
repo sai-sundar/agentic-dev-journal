@@ -1,0 +1,36 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { type CollectionEntry } from 'astro:content';
+
+type Props = CollectionEntry<'journal'>['data'];
+
+const { title, description, date, tags } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="journal-post">
+    <header class="post-header">
+      <a href="/agentic-dev-journal/journal" class="back-link">← Back to archive</a>
+      <h1>{title}</h1>
+      <div class="post-meta">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {tags.length > 0 && (
+          <div class="tags">
+            {tags.map((tag) => (
+              <a href={`/agentic-dev-journal/tags/${tag}`} class="tag">#{tag}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+    <div class="post-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

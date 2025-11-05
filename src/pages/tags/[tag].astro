@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('journal');
+  const uniqueTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts
+      .filter((post) => post.data.tags.includes(tag) && !post.data.draft)
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`Tag: ${tag} - Dev Journal`}>
+  <h1>#{tag}</h1>
+  <p style="color: var(--text-muted); margin-bottom: 2rem;">
+    {posts.length} {posts.length === 1 ? 'entry' : 'entries'} tagged with "{tag}"
+  </p>
+
+  <div class="entry-list">
+    {posts.map((post) => (
+      <article class="entry-card">
+        <h2>
+          <a href={`/agentic-dev-journal/journal/${post.slug}`}>{post.data.title}</a>
+        </h2>
+        <div class="entry-meta">
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        </div>
+        <p>{post.data.description}</p>
+      </article>
+    ))}
+  </div>
+
+  <a href="/agentic-dev-journal/journal" style="display: inline-block; margin-top: 2rem;">
+    ← Back to all entries
+  </a>
+</BaseLayout>

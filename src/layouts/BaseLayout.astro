@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'A dev journal about coding with AI agents and new applications' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/agentic-dev-journal/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav>
+          <a href="/agentic-dev-journal/" class="logo">Dev Journal</a>
+          <div class="nav-links">
+            <a href="/agentic-dev-journal/">Home</a>
+            <a href="/agentic-dev-journal/journal">Archive</a>
+            <a href="/agentic-dev-journal/about">About</a>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer>
+        <p>Musings on coding with AI agents and exploring new applications</p>
+      </footer>
+    </div>
+  </body>
+</html>
