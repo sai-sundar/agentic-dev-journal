@@ -8,7 +8,7 @@ draft: false
 
 ## The Goal
 
-I wanted to try claude code on web broser and try a few experiments.
+I wanted to try claude code on web browser and try a few experiments.
 
 ## The Approach
 
@@ -26,7 +26,11 @@ Now I could parse through my repos and perform different tasks.
 - Code review and refactor
 - Documentation
 - I also used planning mode and created this dev journal page.
-  
+
+Another thing that I tried was adding a skill in the claude settings and checking if it was 
+available in the browser mode. I created a skill called repo-cleanup and imported in the 
+cababilities panel. 
+
 ## What Didn't
 
 - There seemed to be some connection issues.
@@ -36,7 +40,6 @@ Now I could parse through my repos and perform different tasks.
 
 - The tool is great for seamlessly making quick changes on git repos
 - Also creating new project structure
-
 
 ## Next Steps
 
